@@ -20,8 +20,11 @@ class TasksController extends AbstractController
     #[Route('/tasks', name: 'app_tasks')]
     public function index(): Response
     {
+        $tasks= $this->doctrine->getRepository(Task::class)->findAll();
+
+
         return $this->render('tasks/index.html.twig', [
-            'controller_name' => 'TasksController',
+            'tasks' => $tasks
         ]);
     }
 
@@ -54,5 +57,14 @@ class TasksController extends AbstractController
     public function addedSuccessfully()
     {
         return $this->render('tasks/add_successfully.html.twig');
+    }
+
+    #[Route('tasks/info/{id}', name: 'app_tasks_info')]
+    public function info(int $id)
+    {
+        $task= $this->doctrine->getRepository(Task::class)->find($id);
+        return $this->render('tasks/info.html.twig', [
+            'task' => $task
+        ]);
     }
 }
