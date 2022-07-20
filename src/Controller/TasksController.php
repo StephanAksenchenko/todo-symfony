@@ -15,4 +15,9 @@ class TasksController extends AbstractController
             'controller_name' => 'TasksController',
         ]);
     }
+    #[Route('/tasks/add/successfully', name: 'app_tasks__add_successfully')]
+    public function addedSuccessfully()
+    {
+        return $this->render('tasks/add_successfully.html.twig');
+    }
 }
