@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,11 @@ use TaskType;
 
 class TasksController extends AbstractController
 {
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     #[Route('/tasks', name: 'app_tasks')]
     public function index(): Response
     {
@@ -29,6 +35,10 @@ class TasksController extends AbstractController
 
         if ($form->isSubmitted()) {
             $task = $form->getData();
+
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($task);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_tasks__add_successfully');
         }
