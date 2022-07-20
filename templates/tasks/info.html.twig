@@ -1,5 +1,6 @@
 <h1>Задача {{ task.id }}</h1>
 
+<p>Создано: {{task.createdAt|date('d-m-Y')}}</p>
 <p>Название задачи: {{ task.title }}</p>
 <p>Описание задачи: {{ task.description }}</p>
 

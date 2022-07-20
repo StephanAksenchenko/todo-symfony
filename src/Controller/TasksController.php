@@ -38,6 +38,7 @@ class TasksController extends AbstractController
 
         if ($form->isSubmitted()) {
             $task = $form->getData();
+            $task->setCreatedAt(new \DateTime('now'));
 
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($task);
